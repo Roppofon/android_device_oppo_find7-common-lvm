@@ -20,8 +20,8 @@
 # Include path
 TARGET_SPECIFIC_HEADER_PATH += device/oppo/find7-common/include
 
-# Kernel
-BOARD_KERNEL_CMDLINE := console=ttyHSL0,115200,n8 androidboot.hardware=qcom user_debug=31 msm_rtb.filter=0x3F ehci-hcd.park=3
+# Kernel # zusätzlich hinzugefügt: androidboot.selinux=permissive for testing
+BOARD_KERNEL_CMDLINE := console=ttyHSL0,115200,n8 androidboot.hardware=qcom user_debug=31 msm_rtb.filter=0x3F ehci-hcd.park=3 androidboot.selinux=permissive
 TARGET_KERNEL_CONFIG := cyanogenmod_find7_defconfig
 TARGET_KERNEL_CROSS_COMPILE_PREFIX := arm-linux-androideabi-
 TARGET_KERNEL_SOURCE := kernel/oppo/msm8974
@@ -55,8 +55,21 @@ TARGET_LIBINIT_MSM8974_DEFINES_FILE := device/oppo/find7-common/init/init_find7.
 # Properties
 TARGET_SYSTEM_PROP += device/oppo/find7-common/system.prop
 
+#-include device/qcom/sepolicy/sepolicy.mk
+
+# MUST NOT USE LOCAL_PATH
+#BOARD_SEPOLICY_DIRS += device/oppo/find7-common/sepolicy
+
+
+
 # Recovery
-TARGET_RECOVERY_FSTAB := device/oppo/find7-common/rootdir/etc/fstab.recovery
+# was: TARGET_RECOVERY_FSTAB := device/oppo/find7-common/rootdir/etc/fstab.recovery
+
+#TODO: Need to determine just how this is used.  There's a slight
+#chance this could cause some small issues on LVM configs
+#but overall, TWRP doesn't use this and the rest of the build system
+#does
+TARGET_RECOVERY_FSTAB := device/oppo/find7-common/rootdir/etc/fstab.qcom.std
 
 # Inherit from the proprietary version
 -include vendor/oppo/find7-common/BoardConfigVendor.mk

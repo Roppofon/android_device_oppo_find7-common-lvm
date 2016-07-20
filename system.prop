@@ -16,4 +16,5 @@ ro.qti.sensors.vmd=true
 ro.qualcomm.cabl=0
 
 # By default, primary storage is physical
-ro.vold.primary_physical=1
+# ro.vold.primary_physical=1
+# changed for LVM
